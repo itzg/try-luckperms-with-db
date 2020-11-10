@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  mariadb:
+    image: mariadb
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: testing
+      MYSQL_DATABASE: minecraft
+  mc:
+    image: itzg/minecraft-server
+    environment:
+      EULA: "TRUE"
+      TYPE: SPIGOT
+      VERSION: "1.12.2"
+      REPLACE_ENV_VARIABLES: "TRUE"
+      ENV_VARIABLE_PREFIX: "CFG_"
+      CFG_DB_HOST: mariadb
+      CFG_DB_PORT: "3306"
+      CFG_DB_NAME: "minecraft"
+      CFG_DB_USERNAME: "root"
+      CFG_DB_PASSWORD: "testing"
+    volumes:
+      - ./plugins:/plugins
+      - ./data:/data
+    ports:
+      - 25565:25565

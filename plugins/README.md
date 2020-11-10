@@ -1,0 +1,1 @@
+Download LuckPerms from https://luckperms.net/download and place in this directory.
